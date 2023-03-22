@@ -4,12 +4,15 @@ import './covid.css';
 const Covid = () => {
 
     const [ data , setData] = useState([]);
-
+    const [ getState, setState ] = useState([]);
+    const [ getSearch, setSearch ] = useState('');
     const getCovidData = async() => {
         try{
             const res = await fetch ('https://data.covid19india.org/data.json');
             const record = await res.json();
-            setData(record.statewise[0]);        }
+            setData(record.statewise[0]);   
+            setState(record.statewise);
+        }
         catch(err){
             console.log(err)
         }
@@ -19,67 +22,77 @@ const Covid = () => {
         getCovidData();
     },[])
 
+   
+    if (getState) {
+        var filteredState = getState.filter(item => item.state !== 'Total' );
+    }
+    const handleChange = (e) =>{
+        e.preventDefault();
+        setSearch(e.target.value);
+    }
     return (
         <>
-          <h1>Live Data</h1>
-          <h2>Covid Live Case Tracker</h2>  
-
-          <ul>
-              <li className='cards'>
+        <h1>Covid Case Tracker</h1>
+              <div className='cards'>
                   <div className='card_main '>
                     <div className='card_inner'>
-                        <p className='card_name'><span>Our</span> Country</p>
-                        <p className='card_total'>INDIA</p>
-                        <p></p>
+                        <div className="country_name">
+                            <p></p>
+                            <p>India</p>
+                        </div>
+                        <div className="active_cases">
+                            <p>Active Cases</p>
+                            <p>{data.active}</p>
+                        </div>
+                        <div className="cases_recovered">
+                            <p>Recovered Cases</p>
+                            <p>{data.recovered}</p>
+                        </div>
+                        <div className="total_confirmed">
+                            <p>Confirmed Cases</p>
+                            <p>{data.confirmed}</p>
+                        </div>
+                        <div className="deaths">
+                            <p>Deaths</p>
+                            <p>{data.deaths}</p>
+                        </div>
+                        <div className="last_updated">
+                            <p>Last Updated Time</p>
+                            <p>{data.lastupdatedtime}</p>
+                        </div>
                     </div>
                   </div>
-              </li>
-              <li className='cards'>
-                  <div className='card_main one'>
-                    <div className='card_inner'>
-                        <p className='card_name'><span>Total</span> Active</p>
-                        <p className='card_total'>{data.active}</p>
-                        <p></p>
+              </div>
+        <h2>State Vise Covid Cases</h2>
+        <div className="search_bar">
+            <input type="search" placeholder="Search State Here..." onChange={handleChange} value={getSearch}/>
+        </div> 
+            <div className='card_row'>
+            {
+              filteredState !== '' ? 
+                filteredState.filter(post => {
+                    if (getSearch === '') {
+                        return post;
+                    }else if (post.state.toLowerCase().includes(getSearch.toLowerCase())) {
+                        return post;
+                    }
+                }).map((items,index )=>
+                    <div className="card-box" key={index}>
+                        <div className="card_title">{items.state}</div>    
+                        <div className="card_description">
+                            <p>Active Cases: {items.active}</p>
+                            <p>Cases Recovered: {items.recovered}</p>
+                            <p>Cases Confirmed: {items.confirmed}</p>
+                            <p>Deaths: {items.deaths}</p>
+                            <p>Last updated: {items.lastupdatedtime}</p>
+                        </div>
                     </div>
-                  </div>
-              </li>
-              <li className='cards'>
-                  <div className='card_main two'>
-                    <div className='card_inner'>
-                        <p className='card_name'><span>Total</span> Recovered</p>
-                        <p className='card_total'>{data.recovered}</p>
-                        <p></p>
-                    </div>
-                  </div>
-              </li>
-              <li className='cards'>
-                  <div className='card_main three'>
-                    <div className='card_inner'>
-                        <p className='card_name'><span>Total</span> Confirmed</p>
-                        <p className='card_total'>{data.confirmed}</p>
-                        <p></p>
-                    </div>
-                  </div>
-              </li>
-              <li className='cards'>
-                  <div className='card_main four'>
-                    <div className='card_inner'>
-                        <p className='card_name'><span>Total</span> Death</p>
-                        <p className='card_total'>{data.deaths}</p>
-                        <p></p>
-                    </div>
-                  </div>
-              </li>
-              <li className='cards'>
-                  <div className='card_main five'>
-                    <div className='card_inner'>
-                        <p className='card_name'><span>Last</span> Updated</p>
-                        <p className='card_total'>{data.lastupdatedtime}</p>
-                        <p></p>
-                    </div>
-                  </div>
-              </li>
-          </ul>
+                )
+            
+            : 'Loading'
+        }
+              </div>
+            
         </>
     )
 } 

@@ -22,13 +22,13 @@ ul{
 .cards{
     transition: transform .6s;
 }
-.cards:hover{
-    transform: scale(1.1)
+.card_inner{
+    display: flex;
+    justify-content: space-around;
+    padding: 2%;
 }
 
 .card_main {
-    height: 150px;
-    width: 300px;
     margin: 25px;
     align-items: center;
     background-color: rgb(116, 116, 209);
@@ -51,4 +51,34 @@ ul{
 .card_total {
     font-size: 25px;
     font-weight: bold;
+}
+.country_name{
+    font-size: 26px;
+    font-weight: 700;
+}
+.card_description p{
+    margin: 5px;
+    font-size: 14px;
+}
+.card_row{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+}
+.card-box{
+    width: 20%;
+    background: #545454;
+    margin: 2%;
+    padding: 10px;
+    text-align: center;
+}
+.card_title{
+    font-size: 20px;
+}
+
+.search_bar input{
+    padding: 5px 10px;
+    width: 30%;
+    font-size: 12px;
 }
