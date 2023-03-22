@@ -1,0 +1,54 @@
+
+/*  Basic Styling */
+body {
+    background-color: rgb(68, 66, 66);
+    padding: 20px;
+    text-align: center;
+    min-height: 100vh;
+    align-items: center;
+    
+}
+
+h1, p, h2 {
+    color: white;
+}
+
+ul{
+    list-style-type:none;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.cards{
+    transition: transform .6s;
+}
+.cards:hover{
+    transform: scale(1.1)
+}
+
+.card_main {
+    height: 150px;
+    width: 300px;
+    margin: 25px;
+    align-items: center;
+    background-color: rgb(116, 116, 209);
+}
+.one{background-color: rgb(15, 109, 15, 1);}
+.two{background-color: rgb(204, 214, 28, 1);}
+.three{background-color: rgb(222, 147, 17, 1);}
+.four{background-color: rgb(116, 116, 209);}
+.five{background-color: rgb(232, 180, 91, 1);}
+
+.card_name{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card_name span {
+    font-size: 15px;
+}
+
+.card_total {
+    font-size: 25px;
+    font-weight: bold;
+}
