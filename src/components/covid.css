@@ -64,7 +64,6 @@ ul{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    
 }
 .card-box{
     width: 20%;
