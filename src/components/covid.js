@@ -63,7 +63,7 @@ const Covid = () => {
                     </div>
                   </div>
               </div>
-        <h2>States Vise Covid Cases</h2>
+        <h2>States Wise Covid Cases</h2>
         <div className="search_bar">
             <input type="search" placeholder="Search State Here..." onChange={handleChange} value={getSearch}/>
         </div> 
