@@ -12,6 +12,9 @@ const Covid = () => {
             const record = await res.json();
             setData(record.statewise[0]);   
             setState(record.statewise);
+            const api_res = await fetch('https://dev228044.service-now.com/api/now/table/kb_knowledge');
+            const api_record = await api_res.json();
+            console.log(api_record);
         }
         catch(err){
             console.log(err)
@@ -30,8 +33,6 @@ const Covid = () => {
         e.preventDefault();
         setSearch(e.target.value);
     }
-    console.log('All States'+ getState);
-    console.log('Total'+ filteredState);
     return (
         <>
         <h1>Covid Case Tracker</h1>
