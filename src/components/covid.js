@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import './covid.css';
+import { useNavigate } from "react-router-dom";
 
 const Covid = () => {
+
+    const navigation = useNavigate();
 
     const [ data , setData] = useState([]);
     const [ getState, setState ] = useState([]);
@@ -20,7 +23,10 @@ const Covid = () => {
             console.log(err)
         }
     }
-
+    const redirectToHomePage = (e)=>{
+        e.preventDefault();
+        navigation('/home');
+    }
     useEffect(()=>{
         getCovidData();
     },[])
@@ -67,6 +73,7 @@ const Covid = () => {
                   </div>
               </div>
         <h2>States Wise Covid Cases</h2>
+        <button onClick={redirectToHomePage}>HomePage</button>
         <div className="search_bar">
             <input type="search" placeholder="Search State Here..." onChange={handleChange} value={getSearch}/>
         </div> 
