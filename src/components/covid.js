@@ -30,6 +30,8 @@ const Covid = () => {
         e.preventDefault();
         setSearch(e.target.value);
     }
+    console.log('All States'+ getState);
+    console.log('Total'+ filteredState);
     return (
         <>
         <h1>Covid Case Tracker</h1>
