@@ -15,7 +15,7 @@ const Covid = () => {
             const record = await res.json();
             setData(record.statewise[0]);   
             setState(record.statewise);
-            const api_res = await fetch('https://dev228044.service-now.com/api/now/table/kb_knowledge');
+            const api_res = await fetch('/api/now/table/kb_knowledge');
             const api_record = await api_res.json();
             console.log(api_record);
         }
