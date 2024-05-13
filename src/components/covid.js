@@ -6,44 +6,49 @@ const Covid = () => {
 
     const navigation = useNavigate();
 
-    const [ data , setData] = useState([]);
-    const [ getState, setState ] = useState([]);
-    const [ getSearch, setSearch ] = useState('');
-    const getCovidData = async() => {
-        try{
-            const res = await fetch ('https://data.covid19india.org/data.json');
+    const [data, setData] = useState([]);
+    const [getState, setState] = useState([]);
+    const [getSearch, setSearch] = useState('');
+    const getCovidData = async () => {
+        try {
+            const res = await fetch('https://data.covid19india.org/data.json');
             const record = await res.json();
-            setData(record.statewise[0]);   
+            setData(record.statewise[0]);
             setState(record.statewise);
-            const api_res = await fetch('https://dev228044.service-now.com/api/now/table/kb_knowledge');
-            const api_record = await api_res.json();
-            console.log(api_record);
+            console.log("Fetching Data");
         }
-        catch(err){
+        catch (err) {
             console.log(err)
         }
     }
-    const redirectToHomePage = (e)=>{
+    const redirectToHomePage = (e) => {
         e.preventDefault();
         navigation('/home');
     }
-    useEffect(()=>{
-        getCovidData();
-    },[])
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            getCovidData();
+        }, 1000);
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [getSearch])
 
-   
+
+
+
     if (getState) {
-        var filteredState = getState.filter(item => item.state !== 'Total' );
+        var filteredState = getState.filter(item => item.state !== 'Total');
     }
-    const handleChange = (e) =>{
+    const handleChange = (e) => {
         e.preventDefault();
         setSearch(e.target.value);
     }
     return (
         <>
-        <h1>Covid Case Tracker</h1>
-              <div className='cards'>
-                  <div className='card_main '>
+            <h1>Covid Case Tracker</h1>
+            <div className='cards'>
+                <div className='card_main '>
                     <div className='card_inner'>
                         <div className="country_name">
                             <p></p>
@@ -70,41 +75,41 @@ const Covid = () => {
                             <p>{data.lastupdatedtime}</p>
                         </div>
                     </div>
-                  </div>
-              </div>
-        <h2>States Wise Covid Cases</h2>
-        <button onClick={redirectToHomePage}>HomePage</button>
-        <div className="search_bar">
-            <input type="search" placeholder="Search State Here..." onChange={handleChange} value={getSearch}/>
-        </div> 
+                </div>
+            </div>
+            <h2>States Wise Covid Cases</h2>
+            <button onClick={redirectToHomePage}>HomePage</button>
+            <div className="search_bar">
+                <input type="search" placeholder="Search State Here..." onChange={handleChange} value={getSearch} />
+            </div>
             <div className='card_row'>
-            {
-              filteredState !== '' ? 
-                filteredState.filter(post => {
-                    if (getSearch === '') {
-                        return post;
-                    }else if (post.state.toLowerCase().includes(getSearch.toLowerCase())) {
-                        return post;
-                    }
-                }).map((items,index )=>
-                    <div className="card-box" key={index}>
-                        <div className="card_title">{items.state}</div>    
-                        <div className="card_description">
-                            <p>Active Cases: {items.active}</p>
-                            <p>Cases Recovered: {items.recovered}</p>
-                            <p>Cases Confirmed: {items.confirmed}</p>
-                            <p>Deaths: {items.deaths}</p>
-                            <p>Last updated: {items.lastupdatedtime}</p>
-                        </div>
-                    </div>
-                )
-            
-            : 'Loading'
-        }
-              </div>
-            
+                {
+                    filteredState !== '' ?
+                        filteredState.filter(post => {
+                            if (getSearch === '') {
+                                return post;
+                            } else if (post.state.toLowerCase().includes(getSearch.toLowerCase())) {
+                                return post;
+                            }
+                        }).map((items, index) =>
+                            <div className="card-box" key={index}>
+                                <div className="card_title">{items.state}</div>
+                                <div className="card_description">
+                                    <p>Active Cases: {items.active}</p>
+                                    <p>Cases Recovered: {items.recovered}</p>
+                                    <p>Cases Confirmed: {items.confirmed}</p>
+                                    <p>Deaths: {items.deaths}</p>
+                                    <p>Last updated: {items.lastupdatedtime}</p>
+                                </div>
+                            </div>
+                        )
+
+                        : 'Loading'
+                }
+            </div>
+
         </>
     )
-} 
+}
 
 export default Covid
