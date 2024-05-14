@@ -23,7 +23,7 @@ const Covid = () => {
     }
     const redirectToHomePage = (e) => {
         e.preventDefault();
-        navigation('/home');
+        navigation('/');
     }
     useEffect(() => {
         const timer = setTimeout(() => {
